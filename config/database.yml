@@ -78,8 +78,10 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+# Heroku modifications
 production:
   <<: *default
+  adapter: postgresql
   database: referable-rails_production
-  username: referable-rails
-  password: <%= ENV['REFERABLE-RAILS_DATABASE_PASSWORD'] %>
+  # username: referable-rails
+  # password: <%= ENV['REFERABLE-RAILS_DATABASE_PASSWORD'] %>
