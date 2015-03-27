@@ -1,0 +1,45 @@
+<div>
+   <h1>REFERABLE * IT&#8217;S WICKED!</h1>
+   
+   <h3>THANK YOU FOR SIGNING UP</h3>
+
+   <h4>Share the link below !</h4>
+
+   <div><%= root_url %>?ref=<%= @user.referral_code %></div>
+</div>
+
+
+<% 
+    referrals_count = @user.referrals.count
+
+    #stops = User::REFERRAL_STEPS
+
+    #found = nil
+
+    #stops.reverse_each { |stop|
+    #    if stop["count"] <= referrals_count and !found
+    #        stop["selected"] = true
+    #        found = stop
+    #    else
+    #        stop["selected"] = false
+    #    end
+    #}   
+ %>
+
+<div>
+   <% 
+      words = ''
+        if referrals_count == 1
+          words = 'referral'
+        elsif 
+          words = 'referrals'
+        end
+
+    %>
+
+    <% if referrals_count == 0 %>
+       <p><span>No</span> referrals...Yet!</p>
+    <% else %>
+       <p><span><%= referrals_count %></span> <%= words %> submitted!</p>
+    <% end %>
+</div>
