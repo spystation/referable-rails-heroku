@@ -41,7 +41,7 @@ Rails.application.configure do
 
   # For mailer configs 
 
-   #config.action_mailer.delivery_method = :sendmail
+  # config.action_mailer.delivery_method = :sendmail
   # Defaults to:
   # config.action_mailer.sendmail_settings = {
   #   location: '/usr/sbin/sendmail',
@@ -51,21 +51,30 @@ Rails.application.configure do
    #config.action_mailer.raise_delivery_errors = true
   # config.action_mailer.default_options = {from: 'no-reply@example.com'}
 
-  # Heroku SMTP Setup
-  config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.raise_delivery_errors = true
   # ActionMailer Config
   # config.action_mailer.default_url_options = { :host => 'referable.herokuapp.com' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default :charset => "utf-8"
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.default :charset => "utf-8"
+  # config.action_mailer.smtp_settings = {
+  #  :address              => "smtp.gmail.com",
+  #  :port                 => 587,
+  #  :domain               => 'gmail.com', #'referable.herokuapp.com',
+  #  :user_name            =>  ENV["GMAIL_USERNAME"],
+  #  :password             =>  ENV["GMAIL_PASSWORD"],
+  #  :authentication       => 'plain',
+  #  :enable_starttls_auto => true  }
+
+  # Heroku SendGrid Setup
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :domain               => 'gmail.com', #'referable.herokuapp.com',
-    :user_name            =>  ENV["GMAIL_USERNAME"],
-    :password             =>  ENV["GMAIL_PASSWORD"],
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+    :address   => "smtp.sendgrid.net",
+    :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
+    :enable_starttls_auto => true, # detects and uses STARTTLS
+    :user_name => ENV["SENDGRID_USERNAME"],
+    :password  => ENV["SENDGRID_PASSWORD"], # SMTP password is any valid API key
+    :authentication => 'login',
+    :domain => 'referable.com', # your domain to identify your server when connecting
 
 end
