@@ -121,6 +121,6 @@ Rails.application.configure do
     :password             => ENV["SENDGRID_PASSWORD"], # SMTP password is any valid API key
     :authentication       => 'login',
     :domain               => 'heroku.com', # your domain to identify your server when connecting
-
+  }
   
 end
