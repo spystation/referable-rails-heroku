@@ -401,3 +401,402 @@ WHERE c.contype = 'f'
   AND t3.nspname = ANY (current_schemas(false))
 ORDER BY c.conname
 [0m
+  [1m[36m (31.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (6.3ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (2.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20150324191541)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (26.7ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "referral_code" character varying, "referrer_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150324191541"]]
+  [1m[36m (6.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.6ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[36mUser Load (1.9ms)[0m  [1mSELECT "users".* FROM "users"[0m
+
+
+Started GET "/" for ::1 at 2015-03-27 22:25:49 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (5.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#new as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "charles.d.michaels@gmail.com"]]
+  Rendered users/new.html.erb within layouts/application (52.3ms)
+Completed 200 OK in 425ms (Views: 381.4ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/assets/users-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/application-5266d2988799ecc8fe6e81eaab412e7d.css?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/application-001948a807d6467a657420955d9f0c1c.js?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/turbolinks-f87b3583ca50adb0488b031297f5580d.js?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started GET "/assets/users-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-03-27 22:25:49 -0400
+
+
+Started POST "/users" for ::1 at 2015-03-27 22:25:58 -0400
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"GVqB7w7M3Gf/qlqBSkwFceGHdnniaiFh2HGsc86+Aqfv9Gmum6gm4m+XB7T4mNbfUg9fLxGDa52rws4borLvPw==", "user"=>{"email"=>"charles.d.michaels@gmail.com"}, "commit"=>"REFERABLE"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'charles.d.michaels@gmail.com' LIMIT 1
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."referral_code" = $1 LIMIT 1  [["referral_code", "b9efb20321"]]
+  [1m[36mSQL (6.1ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at", "referral_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "charles.d.michaels@gmail.com"], ["created_at", "2015-03-28 02:25:58.130473"], ["updated_at", "2015-03-28 02:25:58.130473"], ["referral_code", "b9efb20321"]]
+  [1m[35m (13.0ms)[0m  COMMIT
+  Rendered user_mailer/signup_email.html.erb (0.5ms)
+  Rendered user_mailer/signup_email.text.erb (0.3ms)
+
+UserMailer#signup_email: processed outbound mail in 590.7ms
+
+Sent mail to charles.d.michaels@gmail.com (92.1ms)
+Date: Fri, 27 Mar 2015 22:25:58 -0400
+From: Referable <no-reply@referable.com>
+To: charles.d.michaels@gmail.com
+Message-ID: <55161136bc474_9323fe2a720c348309d5@WLRN-MACBOOK-PRO-012.local.mail>
+Subject: Thanks for signing up!
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_55161136b7a5f_9323fe2a720c3483084e";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_55161136b7a5f_9323fe2a720c3483084e
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Welcome to REFERABLE, charles.d.michaels@gmail.com
+===============================================
+ 
+Share this link: 
+
+https://referable.herokuapp.com/?ref=b9efb20321.
+ 
+Thanks for joining and have a great day!
+----==_mimepart_55161136b7a5f_9323fe2a720c3483084e
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to REFERABLE, charles.d.michaels@gmail.com</h1>
+    
+    <p>
+      Share this link: https://referable.herokuapp.com/?ref=b9efb20321.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
+----==_mimepart_55161136b7a5f_9323fe2a720c3483084e--
+
+Redirected to http://localhost:3000/users/refer
+Completed 302 Found in 751ms (ActiveRecord: 20.5ms)
+
+
+Started GET "/users/refer" for ::1 at 2015-03-27 22:25:58 -0400
+Processing by UsersController#refer as HTML
+  [1m[36mUser Load (17.8ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[35m (5.5ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."referrer_id" = $1  [["referrer_id", 1]]
+  Rendered users/refer.html.erb within layouts/application (90.3ms)
+Completed 200 OK in 160ms (Views: 134.6ms | ActiveRecord: 23.3ms)
+
+
+Started GET "/assets/users-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/users-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/application-5266d2988799ecc8fe6e81eaab412e7d.css?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/turbolinks-f87b3583ca50adb0488b031297f5580d.js?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+
+
+Started GET "/assets/application-001948a807d6467a657420955d9f0c1c.js?body=1" for ::1 at 2015-03-27 22:25:59 -0400
+  [1m[36m (3.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20150324191541)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (15.9ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "referral_code" character varying, "referrer_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150324191541"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.7ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+
+
+Started GET "/" for ::1 at 2015-03-27 22:29:53 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (3.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#new as HTML
+  [1m[35mUser Load (2.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "charles.d.michaels@gmail.com"]]
+  Rendered users/new.html.erb within layouts/application (15.4ms)
+Completed 200 OK in 149ms (Views: 114.5ms | ActiveRecord: 6.1ms)
+
+
+Started GET "/assets/users-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/users-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/turbolinks-f87b3583ca50adb0488b031297f5580d.js?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/application-5266d2988799ecc8fe6e81eaab412e7d.css?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/application-001948a807d6467a657420955d9f0c1c.js?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-03-27 22:29:53 -0400
+
+
+Started POST "/users" for ::1 at 2015-03-27 22:30:01 -0400
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"C97r5qoW1Q51ql0p2fe6Llrzup9eY75bApqGLT11vvf9cAOnP3Ivi+WXABxrI2mA6XuTya2K9KdxKeRFUXlTbw==", "user"=>{"email"=>"charles.d.michaels@gmail.com"}, "commit"=>"REFERABLE"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mUser Exists (0.5ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'charles.d.michaels@gmail.com' LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1[0m
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."referral_code" = $1 LIMIT 1  [["referral_code", "b9d7cd86c6"]]
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("email", "created_at", "updated_at", "referral_code") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "charles.d.michaels@gmail.com"], ["created_at", "2015-03-28 02:30:01.022436"], ["updated_at", "2015-03-28 02:30:01.022436"], ["referral_code", "b9d7cd86c6"]]
+  [1m[35m (1.5ms)[0m  COMMIT
+  Rendered user_mailer/signup_email.html.erb (0.4ms)
+  Rendered user_mailer/signup_email.text.erb (0.3ms)
+
+UserMailer#signup_email: processed outbound mail in 162.8ms
+
+Sent mail to charles.d.michaels@gmail.com (31.3ms)
+Date: Fri, 27 Mar 2015 22:30:01 -0400
+From: Referable <no-reply@referable.com>
+To: charles.d.michaels@gmail.com
+Message-ID: <55161229315ae_a1c3fdc419286c097187@WLRN-MACBOOK-PRO-012.local.mail>
+Subject: Thanks for signing up!
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_551612292fa87_a1c3fdc419286c09708c";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_551612292fa87_a1c3fdc419286c09708c
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Welcome to REFERABLE, charles.d.michaels@gmail.com
+===============================================
+ 
+Share this link: 
+
+https://referable.herokuapp.com/?ref=b9d7cd86c6.
+ 
+Thanks for joining and have a great day!
+----==_mimepart_551612292fa87_a1c3fdc419286c09708c
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to REFERABLE, charles.d.michaels@gmail.com</h1>
+    
+    <p>
+      Share this link: https://referable.herokuapp.com/?ref=b9d7cd86c6.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
+----==_mimepart_551612292fa87_a1c3fdc419286c09708c--
+
+Redirected to http://localhost:3000/users/refer
+Completed 302 Found in 224ms (ActiveRecord: 3.1ms)
+
+
+Started GET "/users/refer" for ::1 at 2015-03-27 22:30:01 -0400
+Processing by UsersController#refer as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "users" WHERE "users"."referrer_id" = $1  [["referrer_id", 1]]
+  Rendered users/refer.html.erb within layouts/application (21.2ms)
+Completed 200 OK in 74ms (Views: 71.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/application-5266d2988799ecc8fe6e81eaab412e7d.css?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/users-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/turbolinks-f87b3583ca50adb0488b031297f5580d.js?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/jquery_ujs-e27bd20a10d28155845a22d71ef94f2f.js?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/jquery-87424c3c19e96d4fb033c10ebe21ec40.js?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/users-fcec5b5a277ac7c20cc9f45a209a3bcd.js?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+
+
+Started GET "/assets/application-001948a807d6467a657420955d9f0c1c.js?body=1" for ::1 at 2015-03-27 22:30:01 -0400
+  [1m[36m (3.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (1.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20150324191541)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (3.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying, "referral_code" character varying, "referrer_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20150324191541"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (1.9ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+
+
+Started GET "/" for 127.0.0.1 at 2015-03-27 22:43:30 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (3.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by UsersController#new as HTML
+  Rendered users/new.html.erb within layouts/application (16.1ms)
+Completed 200 OK in 144ms (Views: 123.3ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/assets/users-64e62ddc273c2f5847f30d698ca14b67.css?body=1" for 127.0.0.1 at 2015-03-27 22:43:30 -0400
+
+
+Started POST "/users" for 127.0.0.1 at 2015-03-27 22:44:05 -0400
+Processing by UsersController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"YzhdSnmloKmrUURQLKutw/iv3Ad4GOqs4ASkGOdBWKJCICDkOEL355/5QXx2A12J4DTo27AnnT2gkz6CW35cuw==", "user"=>{"email"=>"charles.d.michaels@gmail.com"}, "commit"=>"REFERABLE"}
+  [1m[35mUser Load (2.5ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'charles.d.michaels@gmail.com' LIMIT 1[0m
+  [1m[35mUser Exists (0.3ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."referral_code" IS NULL LIMIT 1
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."referral_code" = $1 LIMIT 1[0m  [["referral_code", "77f6a6aa94"]]
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "users" ("email", "created_at", "updated_at", "referral_code") VALUES ($1, $2, $3, $4) RETURNING "id"  [["email", "charles.d.michaels@gmail.com"], ["created_at", "2015-03-28 02:44:05.332808"], ["updated_at", "2015-03-28 02:44:05.332808"], ["referral_code", "77f6a6aa94"]]
+  [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+  Rendered user_mailer/signup_email.html.erb (0.4ms)
+  Rendered user_mailer/signup_email.text.erb (0.3ms)
+
+UserMailer#signup_email: processed outbound mail in 166.1ms
+
+Sent mail to charles.d.michaels@gmail.com (3148.1ms)
+Date: Fri, 27 Mar 2015 22:44:05 -0400
+From: Referable <no-reply@referable.com>
+To: charles.d.michaels@gmail.com
+Message-ID: <551615757e217_c413ffafa3ada387454@WLRN-MACBOOK-PRO-012.local.mail>
+Subject: Thanks for signing up!
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_551615757c957_c413ffafa3ada3874410";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_551615757c957_c413ffafa3ada3874410
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Welcome to REFERABLE, charles.d.michaels@gmail.com
+===============================================
+ 
+Share this link: 
+
+https://referable.herokuapp.com/?ref=77f6a6aa94.
+ 
+Thanks for joining and have a great day!
+----==_mimepart_551615757c957_c413ffafa3ada3874410
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to REFERABLE, charles.d.michaels@gmail.com</h1>
+    
+    <p>
+      Share this link: https://referable.herokuapp.com/?ref=77f6a6aa94.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
+----==_mimepart_551615757c957_c413ffafa3ada3874410--
+
+Redirected to http://localhost:3000/users/refer
+Completed 302 Found in 3349ms (ActiveRecord: 6.0ms)
+
+
+Started GET "/users/refer" for 127.0.0.1 at 2015-03-27 22:44:08 -0400
+Processing by UsersController#refer as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "charles.d.michaels@gmail.com"]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "users" WHERE "users"."referrer_id" = $1[0m  [["referrer_id", 1]]
+  Rendered users/refer.html.erb within layouts/application (13.2ms)
+Completed 200 OK in 57ms (Views: 55.2ms | ActiveRecord: 0.5ms)
